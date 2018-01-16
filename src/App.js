@@ -1,12 +1,11 @@
-import React from 'react';
-import Mentor from './Mentor';
+import React, { Component } from 'react';
 import './App.css';
+import Mentor from './Mentor';
 
+class App extends Component {
 
-export default class App extends React.Component {
-
-  constructor(props) {
-    super(props)
+  constructor() {
+    super()
 
     this.state = {
       mentors: [
@@ -16,27 +15,31 @@ export default class App extends React.Component {
       ],
       selectedMentor: ""
     }
-
     this.selectMentor = this.selectMentor.bind(this);
   }
 
-  selectMentor(mentorName) {
-    this.setState({ selectedMentor: mentorName });
+  selectMentor(mentor) {
+    this.setState({ selectedMentor: mentor });
   }
 
   render() {
+    console.log("selected", this.state.selectedMentor)
     return (
-      <div>
-        The selected mentor is {this.state.selectedMentor}!
-        {this.state.mentors.map((mentorObject) => (
+      <div className="App">
+        {this.state.selectedMentor ? `The selected mentor is ${this.state.selectedMentor}!` : "No mentor selected."}
+
+        {this.state.mentors.map((mentor) => (
           <Mentor
-            mentor={mentorObject}
+            key={mentor.id}
+            mentor={mentor}
+            selectedMentor={this.state.selectedMentor}
             selectMentor={this.selectMentor}
           />
         ))}
+
       </div>
-    )
+    );
   }
 }
 
-// export default App;
+export default App;
